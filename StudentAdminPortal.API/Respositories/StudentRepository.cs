@@ -1,4 +1,5 @@
-﻿using StudentAdminPortal.API.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using StudentAdminPortal.API.Data;
 using StudentAdminPortal.API.DataModels;
 
 namespace StudentAdminPortal.API.Respositories
@@ -10,9 +11,9 @@ namespace StudentAdminPortal.API.Respositories
         {
             _context = context;
         }
-        public IList<Student> GetAllStudents()
+        public async Task<IList<Student>> GetAllStudents()
         {
-            return _context.Student.ToList();
+            return await _context.Student.Include(nameof(Gender)).Include(nameof(Address)).ToListAsync();
         }
     }
 }
